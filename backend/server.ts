@@ -7,6 +7,9 @@ import { createCanvas, loadImage } from 'canvas';
 const app = express();
 const port = 3000;
 
+// Servir el directorio 'public' como estático
+app.use('/public', express.static('public'));
+
 // Configurar multer para manejar la carga de archivos
 const upload = multer({ dest: 'uploads/' });
 
@@ -31,8 +34,8 @@ app.post('/predict', upload.single('image'), async (req: Request, res: Response)
     // Crear un tensor a partir de los datos de la imagen
     const imageTensor = tf.tensor3d(new Uint8Array(data.buffer), [height, width, 4]);
 
-    // Cargar el modelo
-    const model = await tf.loadLayersModel('file://path/to/your/model/model.json');
+    // Cargar el modelo desde una URL HTTP local
+    const model = await tf.loadLayersModel('http://localhost:3000/public/modelo/first_model.h5');
 
     // Preprocesar la imagen y hacer la predicción
     const resizedImage = tf.image.resizeBilinear(imageTensor, [224, 224]);
