@@ -11,7 +11,7 @@ cors.CORS(app)
 UPLOAD_FOLDER = 'uploads'
 MODEL_PATH = 'public/modelo/first_modelv5.keras'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-CLASSES = ['animal', 'humano', 'objeto', 'paisaje']
+CLASSES = ['animal', 'humano', 'objeto inanimado', 'paisaje']
 
 # Asegúrate de que la carpeta de subidas exista
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
