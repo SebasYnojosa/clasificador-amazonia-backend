@@ -3,12 +3,15 @@ from PIL import Image
 import tensorflow as tf
 import numpy as np
 import os
+import flask_cors as cors
 
 app = Flask(__name__)
+cors.CORS(app)
+
 UPLOAD_FOLDER = 'uploads'
 MODEL_PATH = 'public/modelo/first_modelv5.keras'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-CLASSES = ['persona', 'animal', 'objeto', 'paisaje']
+CLASSES = ['animal', 'humano', 'objeto', 'paisaje']
 
 # Asegúrate de que la carpeta de subidas exista
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -22,13 +25,17 @@ def allowed_file(filename):
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'image' not in request.files:
+        print('No file uploaded.')
         return 'No file uploaded.', 400
 
     file = request.files['image']
+
     if file.filename == '':
+        print('No file uploaded.')
         return 'No file uploaded.', 400
 
     if not allowed_file(file.filename):
+        print('File type not allowed. Only .jpg, .jpeg, and .png are allowed.')
         return 'File type not allowed. Only .jpg, .jpeg, and .png are allowed.', 400
 
     # Guardar el archivo subido
