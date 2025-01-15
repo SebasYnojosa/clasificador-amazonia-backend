@@ -306,8 +306,11 @@ def predict():
                 'NoEtnia': calculate_membership_noetnia(noetnia_feature_count, features_dict)
             }
 
+
             # Obtener los 5 elementos con los valores más altos
             top_5_memberships = dict(sorted(membership_dict.items(), key=lambda item: item[1], reverse=True)[:5])
+
+            print(top_5_memberships)
 
             # Eliminar el archivo temporal
             os.remove(file_path)
